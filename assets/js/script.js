@@ -9,6 +9,7 @@ const startBtn = document.querySelector(".start-button")
 const timerElement = document.querySelector(".timer-count");
 const question = document.getElementById("question");
 const answerBtn = document.getElementsByClassName(".answer-buttons");
+const statusBoard = document.querySelector(".game-status");
 
 const answerBtn1 = document.getElementById("answer-btn-1");
 const answerBtn2 = document.getElementById("answer-btn-2");
@@ -88,7 +89,7 @@ function loadquestion(){
     answerBtn2.value = quesAnsBank[currentQuestionIndex].answers.answer2;
     answerBtn3.value = quesAnsBank[currentQuestionIndex].answers.answer3;
     answerBtn4.value = quesAnsBank[currentQuestionIndex].answers.answer4;
-    currentQuestionIndex++;
+    
     }
 
     // The startGame function is called when the start button is clicked
@@ -131,7 +132,16 @@ function startTimer() {
     // }else{
     //     loadquestion();
     // }
+    //currentQuestionIndex++;
     console.log(answer.value);
+    if (answer.value == quesAnsBank[currentQuestionIndex].correct){
+        console.log("CORRECT!");
+        statusBoard.textContent = "CORRECT!"
+    }else{
+        console.log("WRONG!!");
+        statusBoard.textContent = "WRONG"
+    }
+    //console.log(quesAnsBank[currentQuestionIndex].correct);
   }
 
   init();
