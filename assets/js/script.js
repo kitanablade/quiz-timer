@@ -1,18 +1,26 @@
-let currentQuestion = 0;
+let currentQuestionIndex = 0;
 let timeLeft = 30;
 let score = 0;
 let highscores = 0;
 let finished = false;
+answeredQs = 0;
 
 const startBtn = document.querySelector(".start-button")
 const timerElement = document.querySelector(".timer-count");
 const question = document.getElementById("question");
-
 const answerBtn = document.getElementsByClassName(".answer-buttons");
+
 const answerBtn1 = document.getElementById("answer-btn-1");
 const answerBtn2 = document.getElementById("answer-btn-2");
 const answerBtn3 = document.getElementById("answer-btn-3");
 const answerBtn4 = document.getElementById("answer-btn-4");
+
+function init(){
+    answerBtn1.disabled = true;
+    answerBtn2.disabled = true;
+    answerBtn3.disabled = true;
+    answerBtn4.disabled = true;
+}
 
 const quesAnsBank = [
   {
@@ -33,7 +41,17 @@ const quesAnsBank = [
       answer3: "239 miles",
       answer4: "239,000 feet",
     },
-    correct: "answer1",
+    correct: "239,000 mi",
+  },
+  {
+    question: "Who was the first person to set foot on the moon?",
+    answers: {
+      answer1: "John Glenn",
+      answer3: "Neil Armstrong",
+      answer2: "Alan Shepard",
+      answer4: "Buzz Aldrin",
+    },
+    correct: "Neil Armstrong"
   },
   {
     question: "Who was the second person to set foot on the moon?",
@@ -43,48 +61,61 @@ const quesAnsBank = [
       answer2: "Alan Shepard",
       answer4: "Buzz Aldrin",
     },
-    correct: "answer4"
+    correct: "Buzz Aldrin"
   },
-  //    { "Who was the first person to set foot on the moon?"},
-  //     "Who was the second person to set foot on the moon?",
-  //     "How tall was the Saturn V moon rocket?"
+  {
+    question: "How tall was the Saturn V moon rocket?",
+    answers: {
+      answer1: "100 ft",
+      answer3: "1000 meters",
+      answer2: "363 feet",
+      answer4: "663 ft",
+    },
+    correct: "363 feet"
+  },
 ];
 
 startBtn.addEventListener("click", startGame);
-answerBtn1.addEventListener("click", loadquestion);
+//answerBtn1.addEventListener("click");
+// answerBtn2.addEventListener("click", checkAnswer);
+// answerBtn3.addEventListener("click", checkAnswer);
+// answerBtn4.addEventListener("click", checkAnswer);
 
 function loadquestion(){
-    question.textContent = quesAnsBank[currentQuestion].question;
-    answerBtn1.value = quesAnsBank[currentQuestion].answers.answer1;
-    answerBtn2.value = quesAnsBank[currentQuestion].answers.answer2;
-    answerBtn3.value = quesAnsBank[currentQuestion].answers.answer3;
-    answerBtn4.value = quesAnsBank[currentQuestion].answers.answer4;
-    currentQuestion++;
+    
+    question.textContent = quesAnsBank[currentQuestionIndex].question;
+    answerBtn1.value = quesAnsBank[currentQuestionIndex].answers.answer1;
+    answerBtn2.value = quesAnsBank[currentQuestionIndex].answers.answer2;
+    answerBtn3.value = quesAnsBank[currentQuestionIndex].answers.answer3;
+    answerBtn4.value = quesAnsBank[currentQuestionIndex].answers.answer4;
+    currentQuestionIndex++;
     }
 
     // The startGame function is called when the start button is clicked
 function startGame() {
+    answerBtn1.disabled = false;
+    answerBtn2.disabled = false;
+    answerBtn3.disabled = false;
+    answerBtn4.disabled = false;
     loadquestion();
-    //finished = false;
-    //timerCount = 10;
     // Prevents start button from being clicked when round is in progress
     startBtn.disabled = true;
     startTimer()
   }
-// The setTimer function starts and stops the timer and triggers winGame() and loseGame()
+// The setTimer function starts and stops the timer and triggers the end of the quiz
 function startTimer() {
     // Sets timer
     timer = setInterval(function() {
       timeLeft--;
       timerElement.textContent = timeLeft;
-    //   if (timeLeft >= 0) {
-    //     // Tests if win condition is met
-    //     if (finished && timeLeft > 0) {
-    //       // Clears interval and stops timer
-    //       clearInterval(timer);
-    //       //winGame();
-    //     }
-    //   }
+      if (timeLeft >= 0) {
+        // Tests if all questions have been answered
+        if (finished && timeLeft > 0) {
+          // Clears interval and stops timer
+          clearInterval(timer);
+          //finishGame();
+        }
+      }
       // Tests if time has run out
       if (timeLeft === 0) {
         // Clears interval
@@ -93,4 +124,14 @@ function startTimer() {
       }
     }, 1000);
   }
-  //startTimer();
+  
+  function checkAnswer(answer){
+    // if (answeredQs == quesAnsBank.length){
+    //     return finished = true; 
+    // }else{
+    //     loadquestion();
+    // }
+    console.log(answer.value);
+  }
+
+  init();
