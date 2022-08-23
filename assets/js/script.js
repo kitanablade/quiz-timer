@@ -1,7 +1,6 @@
 let currentQuestionIndex = 0;
 let timeLeft = 30;
 let score = 0;
-let highscores = 0;
 let finished = false;
 
 const startBtn = document.querySelector(".start-button");
@@ -150,6 +149,7 @@ function endGame() {
   answerBtn3.disabled = true;
   answerBtn4.disabled = true;
   statusBoard.textContent = "🌕 MISSION COMPLETE 🌕"
+  localStorage.setItem("score", score);
 }
 
 init();
